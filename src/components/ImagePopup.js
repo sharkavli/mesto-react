@@ -1,5 +1,5 @@
 function ImagePopup(props) {
-  let { name, link } = props.card;
+  const { name, link } = props.card;
   return (
     <div className={`popup ${name ? 'popup_opened' : ''}`} id="popupImg">
       <div className="popup__photo-container">
