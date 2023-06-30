@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../utils/api.js';
-import Cards from './Cards.js';
+import Card from './Card.js';
 
 function Main(props) {
   const [userName, setUserName] = useState([]);
@@ -53,7 +53,7 @@ function Main(props) {
       </section>
       <section className="elements">
         {cards.map(({ id, ...props }) => (
-          <Cards onCardClick={props.onCardClick} key={id} {...props} />
+          <Card onCardClick={props.onCardClick} key={id} {...props} />
         ))}
       </section>
     </>

@@ -1,6 +1,6 @@
 import likeIcon from '../images/like.svg';
 
-function Cards(props) {
+function Card(props) {
   function handleClick() {
     props.onCardClick(props.name, props.link);
   }
@@ -25,4 +25,4 @@ function Cards(props) {
   );
 }
 
-export default Cards;
+export default Card;
