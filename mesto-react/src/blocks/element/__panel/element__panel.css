@@ -1,0 +1,27 @@
+.element__panel {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px calc((100% - 246px) / 2) 12px;
+  height: min-content;
+}
+
+@media screen and (max-width: 1279px) {
+  .element__panel {
+    padding: 2vw calc((100% - 19vw) / 2) 2vw;
+  }
+}
+@media screen and (max-width: 1078px) {
+  .element__panel {
+    padding: 24px calc((100% - 246px) / 2) 26px;
+  }
+}
+@media screen and (max-width: 843px) {
+  .element__panel {
+    padding: 2vw calc((100% - 60vw) / 2) 2vw;
+  }
+}
+@media screen and (max-width: 400px) {
+  .element__panel {
+    padding: 24px calc((100% - 246px) / 2) 26px;
+  }
+}

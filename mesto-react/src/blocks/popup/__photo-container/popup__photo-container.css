@@ -1,0 +1,11 @@
+.popup__photo-container {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
+@media screen and (max-width: 947px) {
+  .popup__photo-container {
+    width: 80vw;
+  }
+}

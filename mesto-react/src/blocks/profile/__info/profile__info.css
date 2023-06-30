@@ -1,0 +1,29 @@
+.profile__info {
+  align-content: center;
+  display: grid;
+  grid-template-areas:
+    'name edit'
+    'work .';
+  gap: 10px 18px;
+}
+@media screen and (max-width: 1078px) {
+  .profile__info {
+    grid-template-columns: max-content;
+    padding-left: 1vw;
+    gap: 14px 10px;
+    margin-bottom: 1vw;
+    padding-top: 22px;
+  }
+}
+@media screen and (max-width: 843px) {
+  .profile__info {
+    margin-bottom: 36px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .profile__info {
+    padding-top: 27px;
+    gap: 10px 17px;
+    padding-left: 0;
+  }
+}

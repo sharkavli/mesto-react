@@ -1,0 +1,12 @@
+.popup__delete-container {
+  position: relative;
+  background-color: #ffff;
+  border-radius: 10px;
+  width: 430px;
+}
+
+@media screen and (max-width: 947px) {
+  .popup__delete-container {
+    width: 80vw;
+  }
+}
