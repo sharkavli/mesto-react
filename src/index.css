@@ -41,8 +41,9 @@ body {
 @import url(./blocks/popup/__save/popup__save.css);
 @import url(./blocks/popup/__save/popup__save-delete.css);
 @import url(./blocks/popup/__save/_inactive/popup__save_inactive.css);
-@import url(./blocks/popup/__img/popup__img.css);
 @import url(./blocks/popup/__image/popup__image.css);
+@import url(./blocks/popup/__img/popup__img.css);
+@import url(./blocks/popup/__picture/popup__picture.css);
 @import url(./blocks/popup/__text/popup__text.css);
 @import url(./blocks/popup/__delete-container/popup__delete-container.css);
 @import url(./blocks/popup/__delete-question/popup__delete-question.css);
