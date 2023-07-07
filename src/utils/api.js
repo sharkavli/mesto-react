@@ -23,7 +23,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  setProfileEdit(data) {
+  setUserInfo(data) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -53,7 +53,6 @@ class Api {
   }
 
   toggleLike(cardId, isLiked) {
-    console.log(isLiked);
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: isLiked ? 'DELETE' : 'PUT',
       headers: this._headers,
@@ -65,7 +64,7 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.link,
+        avatar: data.avatar,
       }),
     }).then(this._checkResponse);
   }

@@ -1,14 +1,34 @@
+import React from 'react';
 import PopupWithForm from './PopupWithForm.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
-function PopupProfile(props) {
+function EditProfilePopup(props) {
+  const [name, setName] = React.useState();
+  const [description, setDescription] = React.useState();
+  const currentUser = React.useContext(CurrentUserContext);
+
+  React.useEffect(() => {
+    setName(currentUser.name);
+    setDescription(currentUser.about);
+  }, [currentUser]);
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    props.onUpdateUser({ name, about: description });
+  }
+
   return (
     <PopupWithForm
+      onSubmit={handleSubmit}
+      onUpdateUser={props.onUpdateUser}
       onClose={props.onClose}
       isOpen={props.isOpen}
       name="Profile"
       title="Редактировать профиль"
     >
       <input
+        value={name || ''}
+        onChange={(event) => setName(event.target.value)}
         required
         minLength="2"
         maxLength="40"
@@ -19,6 +39,8 @@ function PopupProfile(props) {
       />
       <span id="inputTitle-error" className="popup__error-message"></span>
       <input
+        value={description || ''}
+        onChange={(event) => setDescription(event.target.value)}
         required
         minLength="2"
         maxLength="200"
@@ -35,4 +57,4 @@ function PopupProfile(props) {
   );
 }
 
-export default PopupProfile;
+export default EditProfilePopup;

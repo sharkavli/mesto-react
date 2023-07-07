@@ -2,6 +2,8 @@ body {
   background-color: black;
 }
 
+@import url(./blocks/loading/loading.css);
+@import url(./blocks//loading/__spinner/loading__spinner.css);
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/inter.css);
 @import url(./blocks/page/page.css);

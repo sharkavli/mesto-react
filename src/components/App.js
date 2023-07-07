@@ -2,20 +2,16 @@ import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
 import React, { useState } from 'react';
-import PopupAvatar from './PopupAvatar.js';
-import PopupProfile from './PopupProfile.js';
-import PopupAdd from './PopupAdd.js';
+import EditAvatarPopup from './EditAvatarPopup.js';
+import EditProfilePopup from './EditProfilePopup.js';
+import AddPlacePopup from './AddPlacePopup.js';
 import ImagePopup from './ImagePopup.js';
+import Loading from './Loading.js';
 import { api } from '../utils/api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function App() {
-  React.useEffect(() => {
-    api.getProfileInfo().then((res) => {
-      setCurrentUser(res);
-    });
-  }, []);
-
+  const [isloadingPage, setIsLoadingPage] = useState(true);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
@@ -23,15 +19,49 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
 
-  function handleCardLike(card, user) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === user._id);
-    console.log(isLiked);
-    console.log(user);
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.toggleLike(card.id, isLiked).then((newCard) => {
-      setCards((cards) => cards.map((c) => (c.id === card.id ? newCard : c)));
+  React.useEffect(() => {
+    Promise.all([api.getProfileInfo(), api.getCardsInfo()])
+      .then((res) => {
+        setCurrentUser(res[0]);
+        setCards(res[1]);
+        setIsLoadingPage(false);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }, [setCards]);
+
+  const handleCardLike = async (card) => {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    try {
+      const newCard = await api.toggleLike(card._id, isLiked);
+      setCards(cards.map((item) => (item._id === card._id ? newCard : item)));
+    } catch (err) {
+      console.log(`Ошибка: ${err}`);
+    }
+  };
+
+  function handleCardDelete(cardId) {
+    api.deleteCard(cardId);
+    const newCards = cards.filter((card) => card._id !== cardId);
+    setCards(newCards);
+  }
+
+  function handleUpdateUser(data) {
+    api.setUserInfo(data).then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
     });
+  }
+
+  function handleUpdateAvatar(data) {
+    api.setNewAvatar(data).then((res) => setCurrentUser(res));
+    closeAllPopups();
+  }
+
+  function handleAddPlaceSubmit(data) {
+    api.setNewCard(data).then((newCard) => setCards([newCard, ...cards]));
+    closeAllPopups();
   }
 
   function handleCardClick(name, link) {
@@ -63,25 +93,37 @@ function App() {
         <div className="page">
           <div className="page__container">
             <Header />
-            <Main
-              setCards={setCards}
-              cards={cards}
-              onCardLike={handleCardLike}
-              onCardClick={handleCardClick}
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-            />
+            {isloadingPage ? (
+              <Loading />
+            ) : (
+              <Main
+                setCards={setCards}
+                cards={cards}
+                onCardLike={handleCardLike}
+                onCardClick={handleCardClick}
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onCardDelete={handleCardDelete}
+              />
+            )}
             <Footer />
-            <PopupAvatar
+            <EditAvatarPopup
+              onUpdateAvatar={handleUpdateAvatar}
               onClose={closeAllPopups}
               isOpen={isEditAvatarPopupOpen}
             />
-            <PopupProfile
+            <EditProfilePopup
+              onUpdateUser={handleUpdateUser}
               onClose={closeAllPopups}
               isOpen={isEditProfilePopupOpen}
             />
-            <PopupAdd onClose={closeAllPopups} isOpen={isAddPlacePopupOpen} />
+            <AddPlacePopup
+              cards={cards}
+              onAddPlace={handleAddPlaceSubmit}
+              onClose={closeAllPopups}
+              isOpen={isAddPlacePopupOpen}
+            />
             <ImagePopup card={selectedCard} onClose={closeAllPopups} />
           </div>
         </div>
