@@ -38,6 +38,7 @@ function Main(props) {
             onCardLike={props.onCardLike}
             onCardClick={props.onCardClick}
             onCardDelete={props.onCardDelete}
+            onDeletePopup={props.onDeletePopup}
           />
         ))}
       </section>

@@ -20,7 +20,8 @@ function Card(props) {
   }
 
   function handleDeleteClick() {
-    props.onCardDelete(props.card._id);
+    props.onDeletePopup(props.card._id);
+    console.log(props.card._id);
   }
 
   return (
