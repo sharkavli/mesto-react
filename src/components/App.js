@@ -44,10 +44,16 @@ function App() {
   };
 
   function handleCardDelete(cardId) {
-    api.deleteCard(cardId);
-    const newCards = cards.filter((card) => card._id !== cardId);
-    setCards(newCards);
-    closeAllPopups();
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        const newCards = cards.filter((card) => card._id !== cardId);
+        setCards(newCards);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   function handleUpdateUser(data) {
