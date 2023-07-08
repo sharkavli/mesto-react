@@ -31,7 +31,7 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       });
-  }, [setCards]);
+  }, []);
 
   const handleCardLike = async (card) => {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -52,20 +52,39 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    api.setUserInfo(data).then((res) => {
-      setCurrentUser(res);
-      closeAllPopups();
-    });
+    api
+      .setUserInfo(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   function handleUpdateAvatar(data) {
-    api.setNewAvatar(data).then((res) => setCurrentUser(res));
-    closeAllPopups();
+    api
+      .setNewAvatar(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   function handleAddPlaceSubmit(data) {
-    api.setNewCard(data).then((newCard) => setCards([newCard, ...cards]));
-    closeAllPopups();
+    api
+      .setNewCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
   }
 
   function handleCardClick(name, link) {

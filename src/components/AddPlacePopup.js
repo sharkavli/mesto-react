@@ -5,10 +5,10 @@ function AddPlacePopup(props) {
   const [name, setName] = React.useState();
   const [link, setLink] = React.useState();
 
-  // React.useEffect(() => {
-  //   setName();
-  //   setLink();
-  // }, [props.cards]);
+  React.useEffect(() => {
+    setName('');
+    setLink('');
+  }, [props.isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -24,6 +24,7 @@ function AddPlacePopup(props) {
       title="Новое место"
     >
       <input
+        value={name || ''}
         onChange={(evt) => setName(evt.target.value)}
         required
         minLength="2"
@@ -36,6 +37,7 @@ function AddPlacePopup(props) {
       />
       <span id="inputTitle-error" className="popup__error-message"></span>
       <input
+        value={link || ''}
         onChange={(evt) => setLink(evt.target.value)}
         required
         id="inputLink"

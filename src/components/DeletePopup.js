@@ -1,5 +1,4 @@
 export default function DeletePopup(props) {
-  console.log(props);
   function handleDeleteClick() {
     props.onCardDelete(props.cardId);
   }

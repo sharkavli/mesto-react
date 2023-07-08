@@ -4,6 +4,10 @@ import React, { useRef } from 'react';
 function EditAvatarPopup(props) {
   let avatarInput = useRef('');
 
+  React.useEffect(() => {
+    avatarInput.current.value = '';
+  }, [props.isOpen]);
+
   function handleSubmit(evt) {
     evt.preventDefault();
     props.onUpdateAvatar({
