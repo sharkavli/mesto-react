@@ -7,7 +7,6 @@ import EditProfilePopup from './EditProfilePopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 import ImagePopup from './ImagePopup.js';
 import DeletePopup from './DeletePopup.js';
-import Loading from './Loading.js';
 import { api } from '../utils/api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
@@ -126,20 +125,17 @@ function App() {
         <div className="page">
           <div className="page__container">
             <Header />
-            {isloadingPage ? (
-              <Loading />
-            ) : (
-              <Main
-                onDeletePopup={handleDeleteCardClick}
-                setCards={setCards}
-                cards={cards}
-                onCardLike={handleCardLike}
-                onCardClick={handleCardClick}
-                onEditAvatar={handleEditAvatarClick}
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-              />
-            )}
+            <Main
+              isloadingPage={isloadingPage}
+              onDeletePopup={handleDeleteCardClick}
+              setCards={setCards}
+              cards={cards}
+              onCardLike={handleCardLike}
+              onCardClick={handleCardClick}
+              onEditAvatar={handleEditAvatarClick}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+            />
             <Footer />
             <EditAvatarPopup
               onUpdateAvatar={handleUpdateAvatar}
